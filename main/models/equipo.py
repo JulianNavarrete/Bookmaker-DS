@@ -14,6 +14,12 @@ class Equipo(db.Model):
     def __repr__(self):
         return f'<Cliente: {self.__id} {self.__mail} >'
 
+    def to_json(self):
+        pass
+
+    def from_json(self):
+        pass
+
     def set_id(self, id):
         self.__id = id
 
