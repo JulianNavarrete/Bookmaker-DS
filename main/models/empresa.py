@@ -3,30 +3,51 @@ from main import db
 
 class Empresa(db.Model):
 
+    __tablename__ = 'empresas'
     __id = db.Column(db.Integer, primary_key=True)
-    __razon_social = db.Column(db.String(50), nullable=False)
+    __razon_social = db.Column(db.String(80), nullable=False)
     __mail = db.Column(db.String(120), nullable=False)
 
-    def __init__(self):
-        pass
+    def __init__(self, razon_social, email):
+        self.__razon_social = razon_social
+        self.__email = email
 
     def __repr__(self):
-        return f'<Empresa: {self.__id} {self.__mail} >'
+        return f'<Empresa: {self.__razon_social} {self.__email} >'
 
-    def set_id(self, id):
-        self.__id = id
-
-    def get_id(self):
+    @property
+    def id(self):
         return self.__id
 
-    def set_razon_social(self, razon_social):
-        self.__razon_social = razon_social
+    @id.setter
+    def id(self, id):
+        self.__id = id
 
-    def get_razon_social(self):
+    @id.deleter
+    def id(self):
+        del self.__id
+
+    @property
+    def razon_social(self):
         return self.__razon_social
 
-    def set_mail(self, mail):
-        self.__mail = mail
+    @razon_social.setter
+    def razon_social(self, razon_social):
+        self.__razon_social = razon_social
 
-    def get_mail(self):
-        return self.__mail
+    @razon_social.deleter
+    def razon_social(self):
+        del self.__razon_social
+
+    @property
+    def email(self):
+        return self.__email
+
+    @email.setter
+    def email(self, email):
+        self.__email = email
+
+    @email.deleter
+    def email(self):
+        del self.__email
+

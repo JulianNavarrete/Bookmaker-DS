@@ -3,57 +3,65 @@ from main import db
 
 class Cliente(db.Model):
 
+    __tablename__ = 'clientes'
     __id = db.Column('id', db.Integer, primary_key=True)
     __apellido = db.Column('apellido', db.String(50), nullable=False)
     __nombre = db.Column('nombre', db.String(50), nullable=False)
     __mail = db.Column('mail', db.String(120), nullable=False)
 
-    def __init__(self):
-        pass
+    def __init__(self, apellido, nombre, email):
+        self.__apellido = apellido
+        self.__nombre = nombre
+        self.__email = email
 
     def __repr__(self):
-        return f'<Cliente: {self.__id} {self.__mail} >'
+        return f'<Cliente: {self.__apellido} {self.__nombre} {self.__email} >'
 
-    def to_json(self):
-        cliente_json ={
-            'id': self.__id,
-            'apellido': self.__apellido,
-            'nombre': self.__nombre,
-            'mail': self.__mail
-        }
-
-    @staticmethod
-    def from_json(cliente_json):
-        id = cliente_json.get('id')
-        apellido = cliente_json.get('apellido')
-        nombre = cliente_json.get('nombre')
-        mail = cliente_json.get('mail')
-        return Cliente(id=id,
-                       apellido=apellido,
-                       nombre=nombre,
-                       mail=mail,
-                       )
-    
-    def set_id(self, id):
-        self.__id = id
-
-    def get_id(self):
+    @property
+    def id(self):
         return self.__id
 
-    def set_apellido(self, apellido):
-        self.__apellido = apellido
+    @id.setter
+    def id(self, id):
+        self.__id = id
 
-    def get_apellido(self):
+    @id.deleter
+    def id(self):
+        del self.__id
+
+    @property
+    def apellido(self):
         return self.__apellido
 
-    def set_nombre(self, nombre):
-        self.__nombre = nombre
+    @apellido.setter
+    def apellido(self, apellido):
+        self.__apellido = apellido
 
-    def get_nombre(self):
+    @apellido.deleter
+    def apellido(self):
+        del self.__apellido
+
+    @property
+    def nombre(self):
         return self.__nombre
 
-    def set_mail(self, mail):
-        self.__mail = mail
+    @nombre.setter
+    def nombre(self, nombre):
+        self.__nombre = nombre
 
-    def get_mail(self):
-        return self.__mail
+    @nombre.deleter
+    def nombre(self):
+        del self.__nombre
+
+    @property
+    def email(self):
+        return self.__email
+
+    @email.setter
+    def email(self, email):
+        self.__email = email
+
+    @email.deleter
+    def email(self):
+        del self.__email
+

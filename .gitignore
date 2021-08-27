@@ -132,3 +132,4 @@ lib64
 .idea
 bin/
 include/
+**/course.db
