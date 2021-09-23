@@ -33,8 +33,10 @@ def create_app():
     # Cargar a la API el Recurso Cliente e indicar ruta
     api.add_resource(resources.ClienteResource, '/cliente/<id>')
     api.add_resource(resources.EquiposResource, '/equipos')
+    api.add_resource(resources.EquiposResource, '/equipo/<id>')
     api.add_resource(resources.EmpresasResource, '/empresas')
     api.add_resource(resources.EmpresaResource, '/empresa/<id>')
+    api.add_resource(resources.EmpresaResource, '/apuestas')
 
     # Cargar la aplicación en la API de Flask Restful
     api.init_app(app)

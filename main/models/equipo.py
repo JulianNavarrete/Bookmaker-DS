@@ -1,4 +1,5 @@
 from main import db
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Equipo(db.Model):
@@ -10,15 +11,10 @@ class Equipo(db.Model):
     __pais = db.Column(db.String(120), nullable=False)
     __puntaje = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, nombre, escudo, pais):
-        self.__nombre = nombre
-        self.__escudo = escudo
-        self.__pais = pais
-
     def __repr__(self):
         return f'<Equipo: {self.__nombre} {self.__escudo} {self.__pais} >'
 
-    @property
+    @hybrid_property
     def id(self):
         return self.__id
 
@@ -30,7 +26,7 @@ class Equipo(db.Model):
     def id(self):
         del self.__id
 
-    @property
+    @hybrid_property
     def nombre(self):
         return self.__nombre
 
@@ -42,7 +38,7 @@ class Equipo(db.Model):
     def nombre(self):
         del self.__nombre
 
-    @property
+    @hybrid_property
     def escudo(self):
         return self.__escudo
 
@@ -54,7 +50,7 @@ class Equipo(db.Model):
     def escudo(self):
         del self.__escudo
 
-    @property
+    @hybrid_property
     def pais(self):
         return self.__pais
 
@@ -65,4 +61,16 @@ class Equipo(db.Model):
     @pais.deleter
     def pais(self):
         del self.__pais
+
+    @hybrid_property
+    def puntaje(self):
+        return self.__puntaje
+
+    @puntaje.setter
+    def puntaje(self, puntaje):
+        self.__puntaje = puntaje
+
+    @puntaje.deleter
+    def puntaje(self):
+        del self.__puntaje
 

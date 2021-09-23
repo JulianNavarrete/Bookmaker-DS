@@ -3,13 +3,15 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Apuesta(db.Model):
+
+    __tablename__ = 'apuestas'
     __id = db.Column('id', db.Integer, primary_key=True)
     __fecha = db.Column('fecha', db.DateTime, nullable=False)
     __monto = db.Column('monto', db.Float('equipo.id'), nullable=False)
     __equipo_ganador = db.Column('equipo_ganador', db.ForeignKey('equipo.id'), nullable=False)
 
     def __repr__(self):
-        return f'< Cuota:  {self.__id}, {self.__fecha}, {self.__monto}, {self.__equipo_ganador} >'
+        return f'< Apuesta:  {self.__id}, {self.__fecha}, {self.__monto}, {self.__equipo_ganador} >'
 
     @hybrid_property
     def id(self):

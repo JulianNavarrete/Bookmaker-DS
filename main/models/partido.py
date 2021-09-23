@@ -3,6 +3,8 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Partido(db.Model):
+
+    __tablename__ = "partidos"
     __id = db.Column('id', db.Integer, primary_key=True)
     __fecha = db.Column('fecha', db.DateTime, nullable=False)
     __equipo_local = db.Column('equipo_local', db.ForeignKey('equipo.id'), nullable=False)
@@ -11,7 +13,7 @@ class Partido(db.Model):
     __ganador = db.Column('ganador', db.String)
     __goles_local = db.Column('goles_local', db.Integer, nullable=False)
     __goles_visitante = db.Column('goles_visitante', db.Integer, nullable=False)
-    cuota = db.relationship("Cuota", backpopulates="partido", uselist=False)
+    cuota = db.relationship("Cuota", back_populates="partido", uselist=False)
 
     def __repr__(self):
         return f'< Partido:  {self.__id}, {self.__fecha}, {self.__finalizado}>'
@@ -111,8 +113,4 @@ class Partido(db.Model):
     @goles_visitante.deleter
     def goles_visitante(self):
         del self.__equipo_visitante
-
-
-
-
 

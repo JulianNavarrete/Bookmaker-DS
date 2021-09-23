@@ -25,6 +25,7 @@ class Apuesta {
     - id
     - fecha
     - monto
+    - monto_minimo
     - equipo_ganador
 }
 
@@ -48,11 +49,13 @@ class Partido {
 
 Partido *-- Equipo: equipo_local
 Partido *-- Equipo: equipo_visitante
+
 Cliente --> Apuesta: Realiza apuesta
 Cliente --|> Model
 Empresa --|> Model
 Equipo --|> Model
 Partido --|> Model
+
 Cuota -- Partido
 Apuesta --> Partido: Se realiza sobre
 Cuota --|> Model

@@ -1,4 +1,5 @@
 from main import db
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Cliente(db.Model):
@@ -8,11 +9,7 @@ class Cliente(db.Model):
     __apellido = db.Column('apellido', db.String(50), nullable=False)
     __nombre = db.Column('nombre', db.String(50), nullable=False)
     __mail = db.Column('mail', db.String(120), nullable=False)
-
-    def __init__(self, apellido, nombre, email):
-        self.__apellido = apellido
-        self.__nombre = nombre
-        self.__email = email
+    __activado = db.Column('activado', db.Boolean, nullable=False)
 
     def __repr__(self):
         return f'<Cliente: {self.__apellido} {self.__nombre} {self.__email} >'
@@ -64,4 +61,16 @@ class Cliente(db.Model):
     @email.deleter
     def email(self):
         del self.__email
+
+    @hybrid_property
+    def activado(self):
+        return self.__activado
+
+    @activado.setter
+    def activado(self, activado):
+        self.__activado = activado
+
+    @activado.deleter
+    def activado(self):
+        del self.__activado
 

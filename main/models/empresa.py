@@ -8,10 +8,6 @@ class Empresa(db.Model):
     __razon_social = db.Column(db.String(80), nullable=False)
     __mail = db.Column(db.String(120), nullable=False)
 
-    def __init__(self, razon_social, email):
-        self.__razon_social = razon_social
-        self.__email = email
-
     def __repr__(self):
         return f'<Empresa: {self.__razon_social} {self.__email} >'
 

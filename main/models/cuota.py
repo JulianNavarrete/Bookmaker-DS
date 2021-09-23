@@ -3,11 +3,14 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Cuota(db.Model):
+
+    __tablename__ = "cuotas"
     __id = db.Column('id', db.Integer, primary_key= True )
     __probabilidad_local = db.Column('probalididad_local', db.Float)
     __probabilidad_empate = db.Column('probabilidad_empate', db.Float)
     __probabilidad_visitante = db.Column('probabilidad_visitante', db.Float)
-    partido = db.relationship("Partido", backpopulates="cuota", uselist=False)
+    __partido_id = db.Column("partidos_id", db.Integer, db.ForeignKey('partidos.id'))
+    partido = db.relationship("Partido", back_populates="cuota")
 
     def __repr__(self):
         return f'< Cuota:  {self.__id} {self.__probabilidad_local}, {self.__probabilidad_empate}, {self.__probabilidad__visitante}>'
@@ -28,7 +31,6 @@ class Cuota(db.Model):
     def probabilidad_local(self):
         return self.__probabilidad_local
 
-
     @probabilidad_local.setter
     def probabilidad_local(self, probabilidad_local):
         self.__probabilidad_local = probabilidad_local
@@ -37,20 +39,27 @@ class Cuota(db.Model):
     def probabilidad_empate(self):
         return self.__probabilidad_empate
 
-
-
     @probabilidad_empate.setter
     def probabilidad_empate(self, probabilidad_empate):
         self.__probabilidad_empate = probabilidad_empate
-
 
     @hybrid_property
     def probabilidad_visitante(self):
         return self.__probabilidad_visitante
 
-
-
     @probabilidad_visitante.setter
     def probabilidad_visitante(self, probabilidad_visitante):
         self.__probabilidad_visitante = probabilidad_visitante
+
+    @hybrid_property
+    def partido_id(self):
+        return self.__partido_id
+
+    @partido_id.setter
+    def partido_id(self, partido_id):
+        self.__partido_id = partido_id
+
+    @partido_id.deleter
+    def partido_id(self):
+        del self.__partido_id
 

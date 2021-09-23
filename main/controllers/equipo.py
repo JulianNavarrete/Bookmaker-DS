@@ -7,22 +7,6 @@ from main.map import EquipoSchema
 equipo_schema = EquipoSchema()
 
 
-class Equipos(Resource):
-
-    def get(self):
-        equipo = db.session.query(EquipoModel)
-        return equipo_schema.dump(equipo, many=True)
-
-    def post(self):
-        equipo = equipo_schema.load(request.get_json())
-        try:
-            db.session.add(equipo)
-            db.session.commit()
-            return equipo_schema.dump(equipo), 201
-        except:
-            return '', 404
-
-
 class Equipo(Resource):
 
     def get(self, id):
@@ -43,6 +27,22 @@ class Equipo(Resource):
         data = request.get_json().items()
         for key, value in data:
             setattr(equipo, key, value)
+        try:
+            db.session.add(equipo)
+            db.session.commit()
+            return equipo_schema.dump(equipo), 201
+        except:
+            return '', 404
+
+
+class Equipos(Resource):
+
+    def get(self):
+        equipo = db.session.query(EquipoModel)
+        return equipo_schema.dump(equipo, many=True)
+
+    def post(self):
+        equipo = equipo_schema.load(request.get_json())
         try:
             db.session.add(equipo)
             db.session.commit()

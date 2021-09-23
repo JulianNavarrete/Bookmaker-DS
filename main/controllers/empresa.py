@@ -3,31 +3,16 @@ from flask import request, jsonify
 from .. import db
 from main.models import EmpresaModel
 from main.map import EmpresaSchema
+from main.services import EmpresaService
 
 empresa_schema = EmpresaSchema()
-
-
-class Empresas(Resource):
-
-    def get(self):
-        empresas = db.session.query(EmpresaModel)
-        return empresa_schema.dump(empresas, many=True)
-
-    def post(self):
-        empresas = empresa_schema.load(request.get_json())
-        try:
-            db.session.add(empresas)
-            db.session.commit()
-            return empresa_schema.dump(empresas), 201
-        except:
-            return '', 404
+empresa_service = EmpresaService()
 
 
 class Empresa(Resource):
 
     def get(self, id):
-        empresa = db.session.query(EmpresaModel).get_or_404(id)
-        return empresa_schema.dump(empresa)
+        return empresa_schema.dump(empresa_service.obtener_empresa_por_id(id))
 
     def delete(self, id):
         empresa = db.session.query(EmpresaModel).get_or_404(id)
@@ -47,6 +32,21 @@ class Empresa(Resource):
             db.session.add(empresa)
             db.session.commit()
             return empresa_schema .dump(empresa), 201
+        except:
+            return '', 404
+
+
+class Empresas(Resource):
+
+    def get(self):
+        return empresa_schema.dump(empresa_service.obtener_empresas(), many=True)
+
+    def post(self):
+        empresas = empresa_schema.load(request.get_json())
+        try:
+            db.session.add(empresas)
+            db.session.commit()
+            return empresa_schema.dump(empresas), 201
         except:
             return '', 404
 
